@@ -4,7 +4,8 @@ class Node:
         self.next = None
 
     def __str__(self):
-        return self.data
+        return str(self.data)
+
         """ Return a string representation of the data """
 
 
@@ -33,9 +34,10 @@ class Storage:
             self.head = current.next
             data = current.data
             current = None
+            return data
         else:
             print("the list is empty")
-        return data
+        
 
         """ Remove the head Node and return its data. """
 
@@ -57,7 +59,6 @@ class Storage:
         counter = 0
         while current != None:
             counter += 1
-
             if counter == position1:
                 pPosition1 = current
                 
@@ -69,30 +70,7 @@ class Storage:
                 pPosition1.data = pPosition2.data
                 pPosition2.data = temp
 
-                
-            
+           
             current= current.next
 
             
-
-    
-
-p1 = Storage()
-n1 = p1.push(100)
-n2 = p1.push(50)
-n3 = p1.push(75)
-
-
-corrent = n2
-while corrent != None:
-    print(corrent.data)
-    corrent = corrent.next
-
-p1.swap(1,2)
-
-corrent = n2
-while corrent != None:
-    print(corrent.data)
-    corrent = corrent.next
-
-
