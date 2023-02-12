@@ -1,120 +1,86 @@
+#include "storage.h"
 #include <iostream>
 
 using namespace std;
 
-class Node
+/** Create a Node to hold the data, then put it at the head of the list.
+ * @param text The data for the new node
+*/
+void Storage::push(int data)
 {
-public:
-    int data;
-    int nodeNumber;
-    Node *next;
-
-    // Default constructor
-    Node()
+    Node *newNode = new Node(data);
+    if(head == NULL)
     {
+        head = newNode;
+        newNode->next = NULL;
+        
+    }
+    else
+    {
+        newNode->next =head;
+        head = newNode;
     }
 
-    // Constructor with data
-    Node(int data)
+    // Implementera här
+}
+
+/** Remove the head Node and return its data.
+ * 
+ * @param [out] The data (only valid if return true)
+ * @return True if there is a node to return
+*/
+bool Storage::pop(int &data) {
+
+    if(head== NULL)
     {
-        this->data = data;
+        return false;
     }
-};
-
-class Storage
-{
-public:
-    Node *head;
-    Node *tail;
-
-    /** Default constructor
-     *
-     */
-    Storage()
+    else
     {
+        Node *current = head;
+        head = current->next;
+        data = current->data;
+        delete current;
+        current = 0;
+        
     }
+    // Implementera här
+    return true;
+    
+}
 
-    /** Create a Node to hold the data, then put it at the head of the list.
-     * @param data The data for the new node
-     */
-    void push(int data)
+/**
+ * Return the data from the head Node, without removing it.
+ * 
+ * @param [out] The data (only valid if return true)
+ * @return True if text has been returned successfully (there is a node)
+*/
+bool Storage::peek(int &data) {
+    if(head == NULL)
     {
-        static int counter = 0;
-        Node *pN = new Node;
-        if (counter == 0)
-        {
-            pN->next = NULL;
-            head = pN;
-            tail = pN;
-            pN->data = data;
-            ++counter;
-            pN->nodeNumber = counter;
-        }
-        else
-        {
-            pN->next = head;
-            head = pN;
-            pN->data = data;
-            ++counter;
-            pN->nodeNumber = counter;
-        }
+        return false;
     }
-
-    /** Remove the head Node and return its data.
-     *
-     * @param [out] The data (only valid if return true)
-     * @return True if there is a node to return
-     */
-    bool pop()
+    else
     {
-        if (head)
-        {
-            Node *pHead = head;
-
-            head = pHead->next;
-
-            delete pHead;
-            pHead = 0;
-            cout << "The first node has been deleted" << endl;
-            return 1;
-        }
-        else
-        {
-            cout << "Node not found it" << endl;
-            return 0;
-        }
+        data = head->data;
     }
+    // Implementera här
+    return true;
+}
 
-    /**
-     * Return the data from the head Node, without removing it.
-     *
-     * @param [out] The data (only valid if return true)
-     * @return True if text has been returned successfully (there is a node)
-     */
-    bool peek()
+/**
+ * Return True if the list is empty, otherwise False 
+ * 
+ * @return True if the storage is empty
+*/
+bool Storage::isEmpty() {
+    if (head != NULL)
     {
-        if (head)
-        {
-            cout << "the value of the data saved in the first node is " << head->data << endl;
-            return 1;
-        }
-        else
-        {
-            cout << "node not found it" << endl;
-            return 0;
-        }
+        return false;
     }
-
-    /**
-     * Return True if the list is empty, otherwise False
-     *
-     * @return True if the list is empty, otherwise False
-     */
-    bool isEmpty()
-    {
-        cout << "node doesn't exist" << endl;
-        return 1;
-    }
+    // Implementera här
+    return true;
+}
 
     /**
      * Swaps the nodes at position i and j.
@@ -147,24 +113,3 @@ public:
     }
 };
 
-main()
-{
-    Storage *s = new Storage();
-    s->push(1);
-    s->push(2);
-    s->push(3);
-
-    s->pop();
-
-    if (s->head)
-    {
-        s->peek();
-    }
-    else
-    {
-        s->isEmpty();
-    }
-
-    s->swap(1, 2);
-    s->peek();
-}
